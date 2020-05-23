@@ -8,7 +8,7 @@ public class Father extends FamilyMember{
 
     @Override
     public String toString() {
-        return "F";
+        return "F{"+ timeToCross + '}';
     }
 }
     

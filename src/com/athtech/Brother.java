@@ -8,6 +8,6 @@ public class Brother extends FamilyMember{
 
     @Override
     public String toString() {
-        return "B";
+        return "B{"+ timeToCross + '}';
     }
 }

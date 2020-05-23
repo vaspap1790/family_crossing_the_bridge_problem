@@ -8,6 +8,6 @@ public class Sister extends FamilyMember{
 
     @Override
     public String toString() {
-        return "S";
+        return "S{"+ timeToCross + '}';
     }
 }

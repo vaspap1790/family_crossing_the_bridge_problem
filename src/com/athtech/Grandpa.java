@@ -8,7 +8,7 @@ public class Grandpa extends FamilyMember {
 
     @Override
     public String toString() {
-        return "G";
+        return "G{"+ timeToCross + '}';
     }
 
 }

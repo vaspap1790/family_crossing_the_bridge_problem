@@ -8,6 +8,6 @@ public class Mother extends FamilyMember {
 
     @Override
     public String toString() {
-        return "M";
+        return "M{"+ timeToCross + '}';
     }
 }
