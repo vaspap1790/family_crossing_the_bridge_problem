@@ -21,16 +21,6 @@ public class StateNode implements Iterable<StateNode> {
 
 
     /**
-     * The Family Members.
-     */
-    private final Grandpa grandpa = new Grandpa();
-    private final Father father = new Father();
-    private final Mother mother = new Mother();
-    private final Sister sister = new Sister();
-    private final Brother brother = new Brother();
-
-
-    /**
      * The amount of family members at the source bank.
      */
     private final List<FamilyMember> figuresAtSourceBank;
@@ -67,9 +57,7 @@ public class StateNode implements Iterable<StateNode> {
         List figuresAtTargetBank = new ArrayList();
         Torch torch = new Torch();
 
-        return new StateNode(figuresAtSourceBank,
-                figuresAtTargetBank,
-                torch);
+        return new StateNode(figuresAtSourceBank, figuresAtTargetBank, torch);
     }
 
 

@@ -24,6 +24,13 @@ public class CombinationUtil {
                                 List<FamilyMember> tempList, int start, int end, int index, int bridge_capacity,
                                 List<StateNode> returnList) {
 
+        List<FamilyMember> departList;
+        if (torch.getLocation().equals(TorchLocation.SOURCE_BANK)) {
+            departList = notCrossed;
+        } else {
+            departList = crossed;
+        }
+
         // Current combination is ready
         if (index == bridge_capacity) {
 
@@ -68,7 +75,7 @@ public class CombinationUtil {
          * element at remaining positions
          */
         for (int i = start; i <= end && end - i + 1 >= bridge_capacity - index; i++) {
-            tempList.set(index, notCrossed.get(i));
+            tempList.set(index, departList.get(i));
             combinationUtil(notCrossed, crossed, torch, tempList, i + 1, end, index + 1, bridge_capacity, returnList);
         }
     }
