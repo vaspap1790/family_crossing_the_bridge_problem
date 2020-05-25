@@ -3,16 +3,22 @@ package com.athtech;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This utility class is used to generate the neighbour states of a StateNode
+ */
 public class CombinationUtil {
 
     /**
-     * crossed          ---> Input List of family Members at source bank
-     * notCrossed       ---> Input List of family Members at target bank
-     * tempList         ---> Temporary List to store current combination
-     * start & end      ---> Staring and Ending indexes in departureList
-     * index            ---> Current index in tempList
-     * bridge_capacity  ---> Size of a combination
-     * returnList       ---> the returning List of nodes
+     *
+     * @param notCrossed       ---> Input List of family Members at source bank
+     * @param crossed          ---> Input List of family Members at target bank
+     * @param torch            ---> the Torch
+     * @param tempList         ---> Temporary List to store current combination
+     * @param start            ---> Staring index in departureList
+     * @param end              ---> Ending index in departureList
+     * @param index            ---> Current index in tempList
+     * @param bridge_capacity  ---> Size of a combination
+     * @param returnList       ---> the returning List of nodes
      */
     static void combinationUtil(List<FamilyMember> notCrossed, List<FamilyMember> crossed, Torch torch,
                                 List<FamilyMember> tempList, int start, int end, int index, int bridge_capacity,
@@ -55,17 +61,29 @@ public class CombinationUtil {
             return;
         }
 
-        // replace index with all possible elements. The condition
-        // "end-i+1 >= bridge_capacity-index" makes sure that including one element
-        // at index will make a combination with remaining element at remaining positions
+        /**
+         * Replace index with all possible elements. The condition
+         * "end-i+1 >= bridge_capacity-index" makes sure that including
+         * one element at index will make a combination with remaining
+         * element at remaining positions
+         */
         for (int i = start; i <= end && end - i + 1 >= bridge_capacity - index; i++) {
             tempList.set(index, notCrossed.get(i));
             combinationUtil(notCrossed, crossed, torch, tempList, i + 1, end, index + 1, bridge_capacity, returnList);
         }
     }
 
-    // The main function that generates all combinations of size r
-    // in List1 of size n. This function mainly uses combinationUtil()
+    /**
+     *
+     * The main function that generates all combinations of size bridge_capacity
+     * in List of size n. This function mainly uses combinationUtil()
+     *
+     * @param notCrossed       ---> Input List of family Members at source bank
+     * @param crossed          ---> Input List of family Members at target bank
+     * @param torch            ---> the Torch
+     * @param bridge_capacity  ---> Size of a combination
+     * @return                 ---> the returning List of nodes
+     */
     static List<StateNode> generateCombination(List<FamilyMember> notCrossed,
                                                List<FamilyMember> crossed, Torch torch, int bridge_capacity) {
 
@@ -108,7 +126,7 @@ public class CombinationUtil {
         List<FamilyMember> tempList = new ArrayList<>();
         while (tempList.size() < bridge_capacity) tempList.add(new Brother());
 
-        // Generate all combinations using temporary array 'data[]'
+        // Generate all combinations using tempList
         combinationUtil(notCrossed, crossed, torch, tempList, 0, departList.size() - 1, 0, bridge_capacity, returnList);
 
         return returnList;

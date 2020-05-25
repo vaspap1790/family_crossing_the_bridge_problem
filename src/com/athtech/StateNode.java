@@ -7,20 +7,18 @@ import java.util.*;
  */
 public class StateNode implements Iterable<StateNode> {
 
-    /**
-     * The minimum bridge capacity.
-     */
-    private static final int MIN_BRIDGE_CAPACITY = 1;
 
     /**
      * The maximum bridge capacity.
      */
     private static final int MAX_BRIDGE_CAPACITY = 2;
 
+
     /**
      * The torch.
      */
     private Torch torch = new Torch();
+
 
     /**
      * The Family Members.
@@ -31,10 +29,12 @@ public class StateNode implements Iterable<StateNode> {
     private final Sister sister = new Sister();
     private final Brother brother = new Brother();
 
+
     /**
      * The amount of family members at the source bank.
      */
     private final List<FamilyMember> figuresAtSourceBank;
+
 
     /**
      * The amount of family members at the target bank.
@@ -55,6 +55,7 @@ public class StateNode implements Iterable<StateNode> {
         this.torch = torch;
     }
 
+
     /**
      * Creates the source state node.
      *
@@ -71,6 +72,7 @@ public class StateNode implements Iterable<StateNode> {
                 torch);
     }
 
+
     /**
      * Checks whether this state encodes a solution state, in which all figures
      * are at the target bank.
@@ -84,6 +86,7 @@ public class StateNode implements Iterable<StateNode> {
                 && figuresAtSourceBank.size() == 0;
     }
 
+
     /**
      * Checks whether this state is terminal, which is the case whenever the torch
      * runs out of battery
@@ -94,6 +97,7 @@ public class StateNode implements Iterable<StateNode> {
         return torch.getBatteryLife() < 0;
     }
 
+
     /**
      * Returns an iterator over this state's neighbor states.
      *
@@ -103,6 +107,7 @@ public class StateNode implements Iterable<StateNode> {
     public Iterator<StateNode> iterator() {
         return new NeighborStateIterator();
     }
+
 
     /**
      * {@inheritDoc }
@@ -138,6 +143,7 @@ public class StateNode implements Iterable<StateNode> {
         return sb.toString();
     }
 
+
     /**
      * {@inheritDoc }
      */
@@ -150,6 +156,7 @@ public class StateNode implements Iterable<StateNode> {
                 Objects.equals(figuresAtTargetBank, stateNode.figuresAtTargetBank);
     }
 
+
     /**
      * {@inheritDoc }
      */
@@ -157,6 +164,7 @@ public class StateNode implements Iterable<StateNode> {
     public int hashCode() {
         return Objects.hash(figuresAtSourceBank, figuresAtTargetBank);
     }
+
 
     /**
      * Implements the actual iterator.
@@ -212,6 +220,7 @@ public class StateNode implements Iterable<StateNode> {
             throw new IllegalArgumentException(errorMessage);
         }
     }
+
 
     /**
      * Checks that {@code integer} is not negative.
