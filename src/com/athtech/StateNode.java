@@ -31,6 +31,9 @@ public class StateNode implements Iterable<StateNode> {
      */
     private final List<FamilyMember> figuresAtTargetBank;
 
+    public Torch getTorch() {
+        return torch;
+    }
 
     /**
      * Constructs a state.
@@ -69,7 +72,6 @@ public class StateNode implements Iterable<StateNode> {
      */
     public boolean isSolutionState() {
         return torch.getLocation() == TorchLocation.TARGET_BANK
-                && torch.getBatteryLife() >= 0
                 && figuresAtTargetBank.size() == 5
                 && figuresAtSourceBank.size() == 0;
     }

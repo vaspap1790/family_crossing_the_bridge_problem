@@ -23,12 +23,13 @@ public class Demo {
 //            System.out.println(stateNode);
 //        }
 
-        UnweightedShortestPathFinder<StateNode> Dfinder = new DepthFirstSearchPathFinder<>();
+
+        UnweightedShortestPathFinder<StateNode> finder = new DepthFirstSearchPathFinder<>();
 
         long startTime = System.currentTimeMillis();
 
         List<StateNode> path =
-                Dfinder.search(StateNode.getInitialStateNode(),
+                finder.search(StateNode.getInitialStateNode(),
                         StateNode::isSolutionState);
 
         long endTime = System.currentTimeMillis();
@@ -41,7 +42,6 @@ public class Demo {
             System.out.println("No solution.");
         }
         else {
-
             int i = 0;
             for (StateNode step : path) {
                 System.out.printf("State %" + fieldLength + "d: %s\n", ++i, step);
