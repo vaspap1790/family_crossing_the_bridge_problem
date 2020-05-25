@@ -15,21 +15,21 @@ public class StateNode implements Iterable<StateNode> {
     /**
      * The maximum bridge capacity.
      */
-    private final int MAX_BRIDGE_CAPACITY = 2;
+    private static final int MAX_BRIDGE_CAPACITY = 2;
 
     /**
      * The torch.
      */
-    private static Torch torch = new Torch();
+    private Torch torch = new Torch();
 
     /**
      * The Family Members.
      */
-    private static final Grandpa grandpa = new Grandpa();
-    private static final Father father = new Father();
-    private static final Mother mother = new Mother();
-    private static final Sister sister = new Sister();
-    private static final Brother brother = new Brother();
+    private final Grandpa grandpa = new Grandpa();
+    private final Father father = new Father();
+    private final Mother mother = new Mother();
+    private final Sister sister = new Sister();
+    private final Brother brother = new Brother();
 
     /**
      * The amount of family members at the source bank.
@@ -62,9 +62,9 @@ public class StateNode implements Iterable<StateNode> {
      */
     public static StateNode getInitialStateNode() {
 
-        List figuresAtSourceBank = Arrays.asList(grandpa, father, mother, sister, brother);
+        List figuresAtSourceBank = Arrays.asList(new Grandpa(), new Father(), new Mother(), new Sister(), new Brother());
         List figuresAtTargetBank = new ArrayList();
-        torch.setLocation(TorchLocation.SOURCE_BANK);
+        Torch torch = new Torch();
 
         return new StateNode(figuresAtSourceBank,
                 figuresAtTargetBank,
@@ -181,73 +181,18 @@ public class StateNode implements Iterable<StateNode> {
 
         // Populates the list of neighbor states.
         private Iterator<StateNode> generateNeighbors() {
+
             if (isTerminalState()) {
                 // Ignore terminal state nodes.
                 return Collections.<StateNode>emptyIterator();
             }
 
-            List<StateNode> list = new ArrayList<>();
-
-//            switch (torch.getLocation()) {
-//                case SOURCE_BANK: {
-//                    trySendFromSourceBank(list);
-//                    break;
-//                }
-//
-//                case TARGET_BANK: {
-//                    trySendFromTargetBank(list);
-//                    break;
-//                }
-//            }
+            List<StateNode> list = CombinationUtil.generateCombination(StateNode.this.figuresAtSourceBank,
+                    StateNode.this.figuresAtTargetBank, StateNode.this.torch, StateNode.MAX_BRIDGE_CAPACITY);
 
             return list.iterator();
         }
 
-        // Attempts to send some figures from the source bank to the target
-        // bank.
-//        private void trySendFromSourceBank(List<StateNode> list) {
-//            int availableMissionaries = Math.min(missionaries, boatCapacity);
-//            int availableCannibals = Math.min(cannibals, boatCapacity);
-//
-//            for (int capacity = 1; capacity <= boatCapacity; ++capacity) {
-//                for (int m = 0; m <= availableMissionaries; ++m) {
-//                    for (int c = 0; c <= availableCannibals; ++c) {
-//                        if (0 < c + m && c + m <= capacity) {
-//                            list.add(new StateNode(missionaries - m,
-//                                    cannibals - c,
-//                                    totalMissionaries,
-//                                    totalCannibals,
-//                                    boatCapacity,
-//                                    BoatLocation.TARGET_BANK));
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        // Attempts to send some figures from the target bank to the source
-//        // bank.
-//        private void trySendFromTargetBank(List<StateNode> list) {
-//            int availableMissionaries =
-//                    Math.min(totalMissionaries - missionaries, boatCapacity);
-//            int availableCannibals =
-//                    Math.min(totalCannibals - cannibals, boatCapacity);
-//
-//            for (int capacity = 1; capacity <= boatCapacity; ++capacity) {
-//                for (int m = 0; m <= availableMissionaries; ++m) {
-//                    for (int c = 0; c <= availableCannibals; ++c) {
-//                        if (0 < c + m && c + m <= capacity) {
-//                            list.add(new StateNode(missionaries + m,
-//                                    cannibals + c,
-//                                    totalMissionaries,
-//                                    totalCannibals,
-//                                    boatCapacity,
-//                                    BoatLocation.SOURCE_BANK));
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
 

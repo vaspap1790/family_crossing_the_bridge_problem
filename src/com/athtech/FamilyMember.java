@@ -2,7 +2,7 @@ package com.athtech;
 
 public class FamilyMember {
 
-    int timeToCross;
+    protected int timeToCross;
 
     public FamilyMember(int timeToCross) {
         this.timeToCross = timeToCross;
