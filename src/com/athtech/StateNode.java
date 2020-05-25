@@ -118,7 +118,7 @@ public class StateNode implements Iterable<StateNode> {
         // Draw torch location and the bridge.
         switch (torch.getLocation()) {
             case SOURCE_BANK: {
-                sb.append(" =< |------|   ");
+                sb.append(" =<  |------|    ");
                 break;
             }
             case TARGET_BANK: {
