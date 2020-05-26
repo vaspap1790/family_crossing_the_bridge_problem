@@ -44,6 +44,7 @@ public interface UnweightedShortestPathFinder<N extends Iterable<N>> {
         }
 
         Collections.<N>reverse(ret);
+
         return ret;
     }
 }

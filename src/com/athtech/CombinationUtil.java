@@ -96,6 +96,7 @@ public class CombinationUtil {
 
         List<StateNode> returnList = new ArrayList<>();
         List<FamilyMember> departList;
+
         if (torch.getLocation().equals(TorchLocation.SOURCE_BANK)) {
             departList = notCrossed;
         } else {

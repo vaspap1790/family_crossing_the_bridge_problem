@@ -31,9 +31,12 @@ public class StateNode implements Iterable<StateNode> {
      */
     private final List<FamilyMember> figuresAtTargetBank;
 
-    public Torch getTorch() {
-        return torch;
-    }
+
+    /**
+     * Getter for the torch
+     */
+    public Torch getTorch() { return torch; }
+
 
     /**
      * Constructs a state.
@@ -192,7 +195,6 @@ public class StateNode implements Iterable<StateNode> {
 
             return list.iterator();
         }
-
     }
 
 }
