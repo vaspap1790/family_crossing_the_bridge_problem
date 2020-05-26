@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.function.Predicate;
 
 /**
- * This class implements the depth-first search path finder.
+ * This class implements the branch&bound search path finder.
  *
  * @param <N> the node implementation type.
  */
-public class DepthFirstSearchPathFinder<N extends Iterable<N>> implements UnweightedShortestPathFinder<N> {
+public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements UnweightedShortestPathFinder<N> {
 
     /**
-     * Searches for a shortest path using depth-first search.
+     * Searches for a shortest path using branch&bound search.
      *
      * @param source          the source node.
      * @param targetPredicate the target node predicate.
@@ -29,22 +29,28 @@ public class DepthFirstSearchPathFinder<N extends Iterable<N>> implements Unweig
 
         parentMap.put(source, null);
         queue.addLast(source);
+        StateNode finalSolution = StateNode.getBadSolutionNode();
 
         while (!queue.isEmpty()) {
+
             N current = queue.removeFirst();
 
             if (targetPredicate.test(current)) {
-                return traceBackPath(current, parentMap);
+                StateNode currentStateNode = (StateNode) current;
+                if(Math.abs(currentStateNode.getTorch().getBatteryLife()) < Math.abs(finalSolution.getTorch().getBatteryLife())){
+                    finalSolution = currentStateNode;
+                }
             }
 
             for (N child : current) {
-                if (!parentMap.containsKey(child)) {
+                StateNode childNode = (StateNode) child;
+                if(childNode.getTorch().getBatteryLife() >= 0){
                     parentMap.put(child, current);
                     queue.addFirst(child);
                 }
             }
         }
 
-        return Collections.<N>emptyList();
+        return traceBackPath((N) finalSolution, parentMap);
     }
 }

@@ -65,6 +65,23 @@ public class StateNode implements Iterable<StateNode> {
 
 
     /**
+     * Creates a bad solution state node.
+     *
+     * @return the initial state node.
+     */
+    public static StateNode getBadSolutionNode() {
+
+        List figuresAtSourceBank = new ArrayList();
+        List figuresAtTargetBank = Arrays.asList(new Grandpa(), new Father(), new Mother(), new Sister(), new Brother());
+        Torch torch = new Torch();
+        torch.setLocation(TorchLocation.TARGET_BANK);
+        torch.setBatteryLife(-20);
+
+        return new StateNode(figuresAtSourceBank, figuresAtTargetBank, torch);
+    }
+
+
+    /**
      * Checks whether this state encodes a solution state, in which all figures
      * are at the target bank.
      *
@@ -74,17 +91,6 @@ public class StateNode implements Iterable<StateNode> {
         return torch.getLocation() == TorchLocation.TARGET_BANK
                 && figuresAtTargetBank.size() == 5
                 && figuresAtSourceBank.size() == 0;
-    }
-
-
-    /**
-     * Checks whether this state is terminal, which is the case whenever the torch
-     * runs out of battery
-     *
-     * @return {@code true} if this state is terminal.
-     */
-    public boolean isTerminalState() {
-        return torch.getBatteryLife() < 0;
     }
 
 
@@ -142,7 +148,8 @@ public class StateNode implements Iterable<StateNode> {
         if (this == o) return true;
         if (!(o instanceof StateNode)) return false;
         StateNode stateNode = (StateNode) o;
-        return Objects.equals(figuresAtSourceBank, stateNode.figuresAtSourceBank) &&
+        return Objects.equals(getTorch(), stateNode.getTorch()) &&
+                Objects.equals(figuresAtSourceBank, stateNode.figuresAtSourceBank) &&
                 Objects.equals(figuresAtTargetBank, stateNode.figuresAtTargetBank);
     }
 
@@ -152,7 +159,7 @@ public class StateNode implements Iterable<StateNode> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(figuresAtSourceBank, figuresAtTargetBank);
+        return Objects.hash(getTorch(), figuresAtSourceBank, figuresAtTargetBank);
     }
 
 
@@ -180,11 +187,6 @@ public class StateNode implements Iterable<StateNode> {
         // Populates the list of neighbor states.
         private Iterator<StateNode> generateNeighbors() {
 
-            if (isTerminalState()) {
-                // Ignore terminal state nodes.
-                return Collections.<StateNode>emptyIterator();
-            }
-
             List<StateNode> list = CombinationUtil.generateCombination(StateNode.this.figuresAtSourceBank,
                     StateNode.this.figuresAtTargetBank, StateNode.this.torch, StateNode.MAX_BRIDGE_CAPACITY);
 
@@ -193,32 +195,4 @@ public class StateNode implements Iterable<StateNode> {
 
     }
 
-
-    /**
-     * Checks that {@code integer} is no less than {@code minimum}, and if it
-     * is, throws an exception with message {@code errorMessage}.
-     *
-     * @param integer      the integer to check.
-     * @param minimum      the minimum allowed value of {@code integer}.
-     * @param errorMessage the error message.
-     * @throws IllegalArgumentException if {@code integer < minimum}.
-     */
-    private static void checkIntNotLess(int integer,
-                                        int minimum,
-                                        String errorMessage) {
-        if (integer < minimum) {
-            throw new IllegalArgumentException(errorMessage);
-        }
-    }
-
-
-    /**
-     * Checks that {@code integer} is not negative.
-     *
-     * @param integer      the integer to check.
-     * @param errorMessage the error message for the exception upon failure.
-     */
-    private static void checkNotNegative(int integer, String errorMessage) {
-        checkIntNotLess(integer, 0, errorMessage);
-    }
 }

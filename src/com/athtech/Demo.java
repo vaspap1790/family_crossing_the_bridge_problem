@@ -1,7 +1,5 @@
 package com.athtech;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Demo {
@@ -24,7 +22,7 @@ public class Demo {
 //        }
 
 
-        UnweightedShortestPathFinder<StateNode> finder = new DepthFirstSearchPathFinder<>();
+        UnweightedShortestPathFinder<StateNode> finder = new BranchAndBoundAlgorithm<>();
 
         long startTime = System.currentTimeMillis();
 
