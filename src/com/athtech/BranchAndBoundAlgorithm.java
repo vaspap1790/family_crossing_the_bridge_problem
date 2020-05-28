@@ -24,7 +24,9 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
         Objects.requireNonNull(source, "The source node is null.");
         Objects.requireNonNull(targetPredicate, "The target predicate is null.");
 
+        // To keep track
         Map<N, N> parentMap = new HashMap<>();
+        // Algorithm's Open List
         Deque<N> queue = new ArrayDeque<>();
 
         parentMap.put(source, null);
@@ -37,6 +39,7 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
 
             if (targetPredicate.test(current)) {
                 StateNode currentStateNode = (StateNode) current;
+                // Keep the best solution
                 if (Math.abs(currentStateNode.getTorch().getBatteryLife()) < Math.abs(finalSolution.getTorch().getBatteryLife())) {
                     finalSolution = currentStateNode;
                 }
@@ -45,12 +48,14 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
             for (N child : current) {
                 StateNode childNode = (StateNode) child;
                 if (finalSolution.getTorch().getBatteryLife() >= 0) {
+                    // Prune not optimal paths - Keep only the promising ones
                     if ((30 - childNode.getTorch().getBatteryLife()) < (30 - finalSolution.getTorch().getBatteryLife())) {
                         parentMap.put(child, current);
                         queue.addFirst(child);
                     }
                 }
                 if (finalSolution.getTorch().getBatteryLife() < 0) {
+                    // Prune not optimal paths - Keep only the promising ones
                     if ((childNode.getTorch().getBatteryLife() >= 0)) {
                         parentMap.put(child, current);
                         queue.addFirst(child);
