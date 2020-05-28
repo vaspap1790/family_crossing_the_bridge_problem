@@ -31,7 +31,7 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
 
         parentMap.put(source, null);
         queue.addLast(source);
-        StateNode finalSolution = StateNode.getBadSolutionNode();
+        StateNode finalSolution = StateNode.getABadSolutionNode();
 
         while (!queue.isEmpty()) {
 

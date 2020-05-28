@@ -17,7 +17,7 @@ public class StateNode implements Iterable<StateNode> {
     /**
      * The torch.
      */
-    private Torch torch = new Torch();
+    private Torch torch;
 
 
     /**
@@ -72,13 +72,13 @@ public class StateNode implements Iterable<StateNode> {
      *
      * @return the initial state node.
      */
-    public static StateNode getBadSolutionNode() {
+    public static StateNode getABadSolutionNode() {
 
         List figuresAtSourceBank = new ArrayList();
         List figuresAtTargetBank = Arrays.asList(new Grandpa(), new Father(), new Mother(), new Sister(), new Brother());
         Torch torch = new Torch();
         torch.setLocation(TorchLocation.TARGET_BANK);
-        torch.setBatteryLife(-20);
+        torch.setBatteryLife(-10);
 
         return new StateNode(figuresAtSourceBank, figuresAtTargetBank, torch);
     }
