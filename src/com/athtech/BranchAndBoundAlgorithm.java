@@ -16,7 +16,7 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
      * @param source          the source node.
      * @param targetPredicate the target node predicate.
      * @return the shortest path from source to the first node that passes the
-     *         target node predicate.
+     * target node predicate.
      */
     @Override
     public List<N> search(N source, Predicate<N> targetPredicate) {
@@ -37,16 +37,24 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
 
             if (targetPredicate.test(current)) {
                 StateNode currentStateNode = (StateNode) current;
-                if(Math.abs(currentStateNode.getTorch().getBatteryLife()) < Math.abs(finalSolution.getTorch().getBatteryLife())){
+                if (Math.abs(currentStateNode.getTorch().getBatteryLife()) < Math.abs(finalSolution.getTorch().getBatteryLife())) {
                     finalSolution = currentStateNode;
                 }
             }
 
             for (N child : current) {
                 StateNode childNode = (StateNode) child;
-                if(childNode.getTorch().getBatteryLife() >= 0){
-                    parentMap.put(child, current);
-                    queue.addFirst(child);
+                if (finalSolution.getTorch().getBatteryLife() >= 0) {
+                    if ((30 - childNode.getTorch().getBatteryLife()) < (30 - finalSolution.getTorch().getBatteryLife())) {
+                        parentMap.put(child, current);
+                        queue.addFirst(child);
+                    }
+                }
+                if (finalSolution.getTorch().getBatteryLife() < 0) {
+                    if ((childNode.getTorch().getBatteryLife() >= 0)) {
+                        parentMap.put(child, current);
+                        queue.addFirst(child);
+                    }
                 }
             }
         }
