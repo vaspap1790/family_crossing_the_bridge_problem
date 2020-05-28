@@ -48,14 +48,14 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
             for (N child : current) {
                 StateNode childNode = (StateNode) child;
                 if (finalSolution.getTorch().getBatteryLife() >= 0) {
-                    // Prune not optimal paths - Keep only the promising ones
+                    // Prune not optimal paths - Add only the promising ones to the Open List
                     if ((30 - childNode.getTorch().getBatteryLife()) < (30 - finalSolution.getTorch().getBatteryLife())) {
                         parentMap.put(child, current);
                         queue.addFirst(child);
                     }
                 }
                 if (finalSolution.getTorch().getBatteryLife() < 0) {
-                    // Prune not optimal paths - Keep only the promising ones
+                    // Prune not optimal paths - Add only the promising ones to the Open List
                     if ((childNode.getTorch().getBatteryLife() >= 0)) {
                         parentMap.put(child, current);
                         queue.addFirst(child);
@@ -63,7 +63,7 @@ public class BranchAndBoundAlgorithm<N extends Iterable<N>> implements Unweighte
                 }
             }
         }
-
         return traceBackPath((N) finalSolution, parentMap);
     }
+
 }
